@@ -40,7 +40,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    private void addRecord(Products product){
+    public void addRecord(Products product){
 
         ContentValues values= new ContentValues();
 
@@ -53,14 +53,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     }
 
 
-    private void deleteRecord(String nameInput){
+    public void deleteRecord(String nameInput){
 
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("Delete from " + TABLE_NAME + " where " + COL_2 + "=" + nameInput +";");
+        db.execSQL("Delete from " + TABLE_NAME + " where " + COL_2 + "='"  + nameInput +"';");
         db.close();
     }
 
-    private String databaseToString(){
+    public  String databaseToString(){
         String result="";
         SQLiteDatabase db = getWritableDatabase();
         String query =" Select * from " + TABLE_NAME + ";";
@@ -71,11 +71,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         while(!(c.isAfterLast())){
             result += c.getString(c.getColumnIndex(COL_2));
-            result+= " \t ";
-            result += c.getString(c.getColumnIndex(COL_3));
+            result+= " \n ";
+            //result += c.getString(c.getColumnIndex(COL_3));
             c.moveToNext();
 
         }
+        db.close();
         return result;
     }
 }
